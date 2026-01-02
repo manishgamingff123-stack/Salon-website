@@ -1,0 +1,71 @@
+# Simple Salon Management System
+
+# Data store
+clients = []
+services = {"Haircut": 300, "Hair Color": 800, "Facial": 500}
+appointments = []
+
+def add_client():
+    name = input("Client ka naam: ")
+    phone = input("Client ka phone number: ")
+    clients.append({"name": name, "phone": phone})
+    print(f"{name} added successfully!\n")
+
+def show_clients():
+    print("\n--- Clients List ---")
+    for idx, client in enumerate(clients, 1):
+        print(f"{idx}. {client['name']} - {client['phone']}")
+    print()
+
+def book_appointment():
+    show_clients()
+    client_no = int(input("Client number choose karo: "))
+    if client_no <= 0 or client_no > len(clients):
+        print("Invalid selection!\n")
+        return
+    print("\nAvailable Services:")
+    for s, price in services.items():
+        print(f"{s} - ₹{price}")
+    service_name = input("Service choose karo: ")
+    if service_name not in services:
+        print("Service available nahi hai!\n")
+        return
+    date = input("Appointment date (DD/MM/YYYY): ")
+    appointments.append({
+        "client": clients[client_no-1]['name'],
+        "service": service_name,
+        "price": services[service_name],
+        "date": date
+    })
+    print(f"Appointment booked for {clients[client_no-1]['name']}!\n")
+
+def show_appointments():
+    print("\n--- Appointments ---")
+    for idx, app in enumerate(appointments, 1):
+        print(f"{idx}. {app['client']} - {app['service']} - ₹{app['price']} - {app['date']}")
+    print()
+
+# Main Menu
+while True:
+    print("=== Salon Management ===")
+    print("1. Add Client")
+    print("2. Show Clients")
+    print("3. Book Appointment")
+    print("4. Show Appointments")
+    print("5. Exit")
+    
+    choice = input("Choice: ")
+    
+    if choice == "1":
+        add_client()
+    elif choice == "2":
+        show_clients()
+    elif choice == "3":
+        book_appointment()
+    elif choice == "4":
+        show_appointments()
+    elif choice == "5":
+        print("Exiting... Bye!")
+        break
+    else:
+        print("Invalid choice!\n")
